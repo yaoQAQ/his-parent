@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.bdqn.his.medicine.mapper.MedicineMapper">
+    <sql id="baseColumns">
+        employee.id,
+        employee.eid,
+        employee.emName,
+        employee.gender,
+        employee.age,
+        employee.phone,
+        employee.eClinic,
+        employee.eSection,
+        employee.eRole,
+        employee.createTime,
+        employee.createPerson,
+        employee.status
+    </sql>
+    <select id="findAll" resultType="Employee">
+       SELECT e.eid,e.emNo,e.emName,e.gender,e.age,e.phone,e.eClinic,s.kName,r.rname,e.createTime,e.createPerson,e.status FROM employee e,section s,role r
+WHERE e.eSection=s.kId AND e.eRole=r.rid
+    </select>
+    <select id="findAllBy" resultType="Medicine">
+        SELECT
+        SELECT e.eid,e.emNo,e.emName,e.gender,e.age,e.phone,e.eClinic,s.kName,r.rname,e.kId,e.createTime,e.createPerson,e.status FROM employee e,section s,role r
+        WHERE e.eSection=s.kId AND e.eRole=r.rid
+            <where>
+                <if test="kId != null">and s.KId = #{kId}</if>
+                <if test="name != null and name != ''">and e.`name` like concat('%',#{name},'%')</if>
+            </where>
+    </select>
+
+
+</mapper>
